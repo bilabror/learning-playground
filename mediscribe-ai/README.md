@@ -6,8 +6,6 @@
 
 ## 🚀 Features
 
-- **React Frontend**
-  Component-driven UI built with React.js.
 - **Real-time Recording**
   Capture audio in-browser (WEBM/OPUS).
 - **Accurate Transcription**
