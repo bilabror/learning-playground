@@ -1,13 +1,26 @@
-import { useState, useRef, useEffect } from 'react';
-import { toast } from 'sonner';
+import { useActiveTabStore } from "@/store/useActiveTabStore";
+import { useRecordingStore } from "@/store/useRecordingStore";
+import { useSummaryStore } from "@/store/useSummaryStore";
+import { useTranscriptStore } from "@/store/useTranscriptStore";
+import { useRef, useEffect } from "react";
+import { toast } from "sonner";
 
 export function useAudioRecorder() {
-  const [isRecording, setIsRecording] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
-  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const {
+    audioUrl,
+
+    setIsRecording,
+    setIsPaused,
+    incRecordingTime,
+    setRecordingTime,
+    setRecordedBlob,
+    setAudioUrl,
+    setIsTransitioning,
+    setPlaybackProgress,
+  } = useRecordingStore();
+  const { setTranscript } = useTranscriptStore();
+  const { setSummary } = useSummaryStore();
+  const { setActiveTab } = useActiveTabStore();
 
   const timerRef = useRef<number | NodeJS.Timeout>(undefined);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -35,7 +48,7 @@ export function useAudioRecorder() {
         if (e.data.size > 0) audioChunksRef.current.push(e.data);
       };
       recorder.onstop = () => {
-        const blob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+        const blob = new Blob(audioChunksRef.current, { type: "audio/wav" });
         setRecordedBlob(blob);
         setAudioUrl(URL.createObjectURL(blob));
         stream.getTracks().forEach((t) => t.stop());
@@ -45,37 +58,31 @@ export function useAudioRecorder() {
       setIsRecording(true);
       setIsPaused(false);
       setRecordingTime(0);
-      timerRef.current = setInterval(
-        () => setRecordingTime((t) => t + 1),
-        1000
-      );
-      toast('Recording started');
+      timerRef.current = setInterval(() => incRecordingTime(), 1000);
+      toast("Recording started");
     } catch (err) {
       console.error(err);
-      toast.error('Could not access microphone');
+      toast.error("Could not access microphone");
     } finally {
       setIsTransitioning(false);
     }
   };
 
   const pauseRecording = () => {
-    if (mediaRecorderRef.current?.state === 'recording') {
+    if (mediaRecorderRef.current?.state === "recording") {
       mediaRecorderRef.current.pause();
       if (timerRef.current) clearInterval(timerRef.current);
       setIsPaused(true);
-      toast('Recording paused');
+      toast("Recording paused");
     }
   };
 
   const resumeRecording = () => {
-    if (mediaRecorderRef.current?.state === 'paused') {
+    if (mediaRecorderRef.current?.state === "paused") {
       mediaRecorderRef.current.resume();
-      timerRef.current = setInterval(
-        () => setRecordingTime((t) => t + 1),
-        1000
-      );
+      timerRef.current = setInterval(() => incRecordingTime(), 1000);
       setIsPaused(false);
-      toast('Recording resumed');
+      toast("Recording resumed");
     }
   };
 
@@ -84,10 +91,14 @@ export function useAudioRecorder() {
     if (timerRef.current) clearInterval(timerRef.current);
     setIsRecording(false);
     setIsPaused(false);
-    toast('Recording completed');
+    toast("Recording completed");
   };
 
   const handleNewRecording = () => {
+    setTranscript("");
+    setSummary("");
+    setPlaybackProgress(0);
+    setActiveTab("record");
     setRecordedBlob(null);
     setAudioUrl(null);
     setRecordingTime(0);
@@ -96,12 +107,6 @@ export function useAudioRecorder() {
   };
 
   return {
-    isRecording,
-    isPaused,
-    isTransitioning,
-    recordingTime,
-    recordedBlob,
-    audioUrl,
     startRecording,
     pauseRecording,
     resumeRecording,
