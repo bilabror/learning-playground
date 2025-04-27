@@ -4,8 +4,10 @@ import { useSummaryStore } from "@/store/useSummaryStore";
 import { useTranscriptStore } from "@/store/useTranscriptStore";
 import { useRef, useEffect } from "react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 export function useAudioRecorder() {
+  const { t } = useTranslation();
   const {
     audioUrl,
 
@@ -59,10 +61,10 @@ export function useAudioRecorder() {
       setIsPaused(false);
       setRecordingTime(0);
       timerRef.current = setInterval(() => incRecordingTime(), 1000);
-      toast("Recording started");
+      toast(t("record:alert.started"));
     } catch (err) {
       console.error(err);
-      toast.error("Could not access microphone");
+      toast.error(t("record:alert.error.cloudNotAccessMic"));
     } finally {
       setIsTransitioning(false);
     }
@@ -73,7 +75,7 @@ export function useAudioRecorder() {
       mediaRecorderRef.current.pause();
       if (timerRef.current) clearInterval(timerRef.current);
       setIsPaused(true);
-      toast("Recording paused");
+      toast(t("record:alert.paused"));
     }
   };
 
@@ -82,7 +84,7 @@ export function useAudioRecorder() {
       mediaRecorderRef.current.resume();
       timerRef.current = setInterval(() => incRecordingTime(), 1000);
       setIsPaused(false);
-      toast("Recording resumed");
+      toast(t("record:alert.resumed"));
     }
   };
 
@@ -91,7 +93,7 @@ export function useAudioRecorder() {
     if (timerRef.current) clearInterval(timerRef.current);
     setIsRecording(false);
     setIsPaused(false);
-    toast("Recording completed");
+    toast(t("record:alert.completed"));
   };
 
   const handleNewRecording = () => {

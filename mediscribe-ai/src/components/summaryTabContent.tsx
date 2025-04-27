@@ -5,8 +5,10 @@ import { Button } from "./ui/button";
 import { TabsContent } from "./ui/tabs";
 import Markdown from "react-markdown";
 import { useSummaryStore } from "@/store/useSummaryStore";
+import { useTranslation } from "react-i18next";
 
 export const SummaryTabContent = ({ handleNewRecording }) => {
+  const { t } = useTranslation();
   const { summary } = useSummaryStore();
   return (
     <TabsContent value="summary" className="focus-visible:outline-none">
@@ -28,7 +30,7 @@ export const SummaryTabContent = ({ handleNewRecording }) => {
             variant="outline"
             className="cursor-pointer gap-2 px-8 py-6 text-lg rounded-full border-2 hover:shadow-lg transition-all"
           >
-            <Icons.refresh className={ICON_SIZE_SM} /> Start New Session
+            <Icons.refresh className={ICON_SIZE_SM} /> {t("record:new")}
           </Button>
         </div>
       </div>

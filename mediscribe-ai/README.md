@@ -60,3 +60,4 @@ bun dev
 - [x] Cloud Speech: Configuring and using Google Speech-to-Text in Bun.
 - [x] Vertex AI: Using Gemini-2.0 for structured medical summaries.
 - [x] Zustand: Using it for state management.
+- [x] i18n: Using it for internationalization

@@ -5,8 +5,10 @@ import { TabsContent } from "./ui/tabs";
 import { cn, formatTime } from "@/lib/utils";
 import { useRecordingStore } from "@/store/useRecordingStore";
 import { useActiveTabStore } from "@/store/useActiveTabStore";
+import { useTranslation } from "react-i18next";
 
 export const RecordingTabContent = ({ startRecording, resumeRecording, pauseRecording, stopRecording, handleNewRecording }) => {
+  const { t } = useTranslation();
   const { recordingTime, isRecording, recordedBlob, isTransitioning, isPaused } = useRecordingStore();
   const { setActiveTab } = useActiveTabStore();
 
@@ -40,7 +42,7 @@ export const RecordingTabContent = ({ startRecording, resumeRecording, pauseReco
               )}
             >
               <Icons.mic className={ICON_SIZE_SM} />
-              {isTransitioning ? "Starting..." : "Start Recording"}
+              {isTransitioning ? t("record:starting") : t("record:start")}
             </Button>
           </>
         ) : isRecording ? (
@@ -56,7 +58,7 @@ export const RecordingTabContent = ({ startRecording, resumeRecording, pauseReco
 
             <div className="text-center">
               <p className={`text-5xl font-bold bg-gradient-to-r ${GRADIENT_RECORDING} bg-clip-text text-transparent`}>{formatTime(recordingTime)}</p>
-              <p className="text-lg text-muted-foreground mt-2">{isPaused ? "Recording Paused" : "Recording in Progress"}</p>
+              <p className="text-lg text-muted-foreground mt-2">{isPaused ? t("record:alert.paused") : t("record:inProgress")}</p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-3">
@@ -66,7 +68,7 @@ export const RecordingTabContent = ({ startRecording, resumeRecording, pauseReco
                   size="lg"
                   className={`gap-2 rounded-full px-6 bg-gradient-to-r ${GRADIENT_SUCCESS} hover:shadow-lg hover:shadow-green-500/30 transition-all`}
                 >
-                  <Icons.play className={ICON_SIZE_SM} /> Resume
+                  <Icons.play className={ICON_SIZE_SM} /> {t("record:resume")}
                 </Button>
               ) : (
                 <Button
@@ -75,7 +77,7 @@ export const RecordingTabContent = ({ startRecording, resumeRecording, pauseReco
                   size="lg"
                   className="gap-2 rounded-full px-6 border-2 hover:shadow-lg transition-all"
                 >
-                  <Icons.pause className={ICON_SIZE_SM} /> Pause
+                  <Icons.pause className={ICON_SIZE_SM} /> {t("record:pause")}
                 </Button>
               )}
               <Button
@@ -84,7 +86,7 @@ export const RecordingTabContent = ({ startRecording, resumeRecording, pauseReco
                 size="lg"
                 className={`gap-2 rounded-full px-6 bg-gradient-to-r ${GRADIENT_RECORDING} hover:shadow-lg hover:shadow-red-500/30 transition-all`}
               >
-                <Icons.square className={ICON_SIZE_SM} /> Stop
+                <Icons.square className={ICON_SIZE_SM} /> {t("record:stop")}
               </Button>
             </div>
           </div>
@@ -94,18 +96,20 @@ export const RecordingTabContent = ({ startRecording, resumeRecording, pauseReco
               <Icons.check className={ICON_SIZE_LG} />
             </div>
             <div>
-              <p className="text-2xl font-medium">Recording Completed</p>
-              <p className="text-muted-foreground mt-2">Duration: {formatTime(recordingTime)}</p>
+              <p className="text-2xl font-medium">{t("record:alert.completed")}</p>
+              <p className="text-muted-foreground mt-2">
+                {t("record:duration")}: {formatTime(recordingTime)}
+              </p>
             </div>
             <div className="flex flex-wrap justify-center gap-3">
               <Button onClick={handleNewRecording} variant="outline" className="gap-2 rounded-full px-6 border-2 cursor-pointer">
-                <Icons.refresh className="h-4 w-4" /> New Recording
+                <Icons.refresh className="h-4 w-4" /> {t("record:new")}
               </Button>
               <Button
                 onClick={() => setActiveTab("playback")}
                 className={`gap-2 rounded-full px-6 bg-gradient-to-r ${GRADIENT_PRIMARY} cursor-pointer text-white`}
               >
-                <Icons.play className="h-4 w-4" /> Listen
+                <Icons.play className="h-4 w-4" /> {t("record:listen")}
               </Button>
             </div>
           </div>

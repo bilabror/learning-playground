@@ -10,8 +10,10 @@ import { toast } from "sonner";
 import { useActiveTabStore } from "@/store/useActiveTabStore";
 import { useTranscriptStore } from "@/store/useTranscriptStore";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export const PlaybackTabContent = () => {
+  const { t } = useTranslation();
   const { recordingTime, recordedBlob, audioUrl, isPlaying, playbackProgress, setIsPlaying, togglePlaying, setPlaybackProgress } =
     useRecordingStore();
   const { setActiveTab } = useActiveTabStore();
@@ -40,8 +42,8 @@ export const PlaybackTabContent = () => {
 
   const handleTranscribe = async () => {
     if (!recordedBlob) {
-      toast.error("No recording found", {
-        description: "Please make a recording first.",
+      toast.error(t("transcript:alert.error.recordingNotFound.title"), {
+        description: t("transcript:alert.error.recordingNotFound.description"),
       });
       return;
     }
@@ -60,8 +62,9 @@ export const PlaybackTabContent = () => {
       toast("Transcript created");
       setActiveTab("transcript");
     } catch (error) {
-      toast.error("Transcription failed", {
-        description: error.message,
+      console.error(error);
+      toast.error(t("transcript:alert.error.transcriptError.title"), {
+        description: t("transcript:alert.error.transcriptError.description"),
       });
     }
   };
@@ -106,7 +109,7 @@ export const PlaybackTabContent = () => {
               onClick={handleTranscribe}
               className={`cursor-pointer gap-2 px-8 py-6 text-lg rounded-full bg-gradient-to-r ${GRADIENT_PRIMARY} hover:shadow-lg hover:shadow-blue-500/30 transition-all text-white`}
             >
-              <Icons.fileText className={ICON_SIZE_SM} /> Create Transcript
+              <Icons.fileText className={ICON_SIZE_SM} /> {t("transcript:create")}
             </Button>
           </div>
         </div>

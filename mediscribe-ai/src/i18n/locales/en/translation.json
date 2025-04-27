@@ -1,0 +1,67 @@
+{
+  "app": {
+    "title": "MediScribe AI",
+    "description": "Record, transcribe and summarize patient conversations",
+    "selectLanguage": "Select Language",
+    "tabs": {
+      "record": "Record",
+      "playback": "Playback",
+      "transcript": "Transcript",
+      "summary": "Summary"
+    }
+  },
+  "record": {
+    "start": "Start Recording",
+    "starting": "Starting...",
+    "stop": "Stop Recording",
+    "resume": "Resume Recoding",
+    "pause": "Pause Recording",
+    "duration": "Duration",
+    "new": "New Recording",
+    "listen": "Listen to Recording",
+    "inProgress": "Recording in progress",
+    "alert": {
+      "started": "Recording started",
+      "paused": "Recording paused",
+      "resumed": "Recording resumed",
+      "completed": "Recording completed",
+      "error": {
+        "cloudNotAccessMic": "Could not access microphone"
+      }
+    }
+  },
+  "transcript": {
+    "create": "Create Transcript",
+    "example": "Use example trascript",
+    "placeholder": "Your transcript will appear here...",
+    "alert": {
+      "success": "Transcript created",
+      "error": {
+        "recordingNotFound": {
+          "title": "Recording not found",
+          "description": "Please record a new conversation."
+        },
+        "transcriptError": {
+          "title": "Transcript Error",
+          "description": "An error occurred while creating the transcript."
+        }
+      }
+    }
+  },
+  "summary": {
+    "generate": "Generate Summary",
+    "alert": {
+      "success": "Summary generated",
+      "error": {
+        "transcriptNotFound": {
+          "title": "Transcript not found",
+          "description": "Please create a transcript first."
+        },
+        "summaryError": {
+          "title": "Summary Error",
+          "description": "An error occurred while generating the summary."
+        }
+      }
+    }
+  }
+}

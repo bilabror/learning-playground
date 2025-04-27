@@ -1,0 +1,67 @@
+{
+  "app": {
+    "title": "MediScribe AI",
+    "description": "Rekam, transkrip, dan ringkas percakapan pasien",
+    "selectLanguage": "Pilihan Bahasa",
+    "tabs": {
+      "record": "Rekam",
+      "playback": "Putar",
+      "transcript": "Transkrip",
+      "summary": "Ringkasan"
+    }
+  },
+  "record": {
+    "start": "Mulai Merekam",
+    "starting": "Memulai...",
+    "stop": "Berhenti Merekam",
+    "resume": "Lanjutkan Merekam",
+    "pause": "Jeda Perekaman",
+    "duration": "Durasi",
+    "new": "Rekaman Baru",
+    "listen": "Dengarkan Rekaman",
+    "inProgress": "Perekaman sedang berlangsung",
+    "alert": {
+      "started": "Perekaman dimulai",
+      "paused": "Perekaman dijeda",
+      "resumed": "Perekaman dilanjutkan",
+      "completed": "Perekaman selesai",
+      "error": {
+        "cloudNotAccessMic": "Tidak dapat mengakses mikrofon"
+      }
+    }
+  },
+  "transcript": {
+    "create": "Buat Transkrip",
+    "example": "Gunakan contoh transkrip",
+    "placeholder": "Transkrip Anda akan muncul di sini...",
+    "alert": {
+      "success": "Transkrip berhasil dibuat",
+      "error": {
+        "recordingNotFound": {
+          "title": "Rekaman tidak ditemukan",
+          "description": "Silakan rekam percakapan baru."
+        },
+        "transcriptError": {
+          "title": "Kesalahan Transkrip",
+          "description": "Terjadi kesalahan saat membuat transkrip."
+        }
+      }
+    }
+  },
+  "summary": {
+    "generate": "Buat Ringkasan",
+    "alert": {
+      "success": "Ringkasan berhasil dibuat",
+      "error": {
+        "transcriptNotFound": {
+          "title": "Transkrip tidak ditemukan",
+          "description": "Silakan buat transkrip terlebih dahulu."
+        },
+        "summaryError": {
+          "title": "Kesalahan Ringkasan",
+          "description": "Terjadi kesalahan saat membuat ringkasan."
+        }
+      }
+    }
+  }
+}

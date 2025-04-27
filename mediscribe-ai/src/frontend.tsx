@@ -5,12 +5,13 @@
  * It is included in `src/index.html`.
  */
 
-import { createRoot } from 'react-dom/client';
-import { StrictMode } from 'react';
-import { App } from './App';
-import { RecordingProvider } from './contexts/recording-context';
+import { createRoot } from "react-dom/client";
+import { StrictMode } from "react";
+import { App } from "./App";
+import { RecordingProvider } from "./contexts/recording-context";
+import "@/i18n/config";
 
-const elem = document.getElementById('root')!;
+const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
     <RecordingProvider>
